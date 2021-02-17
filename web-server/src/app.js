@@ -2,7 +2,8 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
-console.log(__dirname);
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../template/views')
 const partialPath = path.join(__dirname,'../template/partials' )
@@ -23,7 +24,7 @@ app.get('', (req, res)=> {
 app.get('/help', (req, res)=> {
     res.render('help' ,{
         title :'HELP',
-         helpText = "This is the line of help text"
+         helpText : "This is the line of help text"
 
     })
 })
@@ -42,9 +43,46 @@ app.get('/about', (req, res)=> {
     })
 })
 app.get('/weather', (req, res)=> {
+    if(!req.query.address){
+        return res.send({
+            error:'You must provide an address !'
+        })
+    }
+    geocode(req.query.address, (error, {location})=> {
+        if(error){
+            return res.send({error})
+        }
+        forecast(location, (error, forecastData)=>{
+            if (error){
+                return  res.send({error})
+            }
+            res.send({
+                forecast: forecastData,
+                location,
+                address: req.query.address
+            })
+        })
+        
+    })
+    // res.send({
+    //     forecast: "snow wet",
+    //     location:"Anaheim",
+    //     address:req.query.address,
+    // })
+
+
+
+
+})
+app.get('/products', (req, res)=> {
+    if(!req.query.search){
+        return  res.send({
+            error:'you must provide a search term'
+        })
+    }
+    console.log(req.query.search);
     res.send({
-        forecast: "snow wet",
-        location:"Anaheim"
+        products:[]
     })
 })
 app.get('*', (req, res)=> {
