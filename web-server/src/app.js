@@ -8,6 +8,10 @@ const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../template/views')
 const partialPath = path.join(__dirname,'../template/partials' )
 
+const port = process.env.PORT || 3000
+
+
+
 const app = express()
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
@@ -92,6 +96,6 @@ app.get('*', (req, res)=> {
         errorMessage:'Page is Not found'
     })
 })
-app.listen(3000, ()=> {
+app.listen(port, ()=> {
     console.log('Server is up on port 3000');
 })
