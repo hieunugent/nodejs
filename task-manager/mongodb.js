@@ -9,6 +9,17 @@ MongoClient.connect(connectionURL, {useNewUrlParser:true, useUnifiedTopology: tr
         return console.log('unable to connect to server');
     }
     const db = client.db(databaseName)
+    db.collection('users').updateOne({_id: new mongodb.ObjectID("602f002972dc4716fef5b09c")}, {
+        $inc:{
+            age:30
+        }
+    }).then((result)=> {
+        console.log("SUCCESS");
+    }).catch((error)=> {
+        console.log("ERROR");
+    })
+
+
     // db.collection('users').insertOne({
     //     name:'Hieu',
     //     age:30
@@ -69,14 +80,14 @@ MongoClient.connect(connectionURL, {useNewUrlParser:true, useUnifiedTopology: tr
     // db.collection('users').find({age:27}).toArray((error, users)=> {
     //     console.log(users);
     // })
-    db.collection('tasks').findOne({_id: new mongodb.ObjectID("602f0706c653c618bd17d3ae")}, (error, task)=> {
-        if(error){
-            return console.log('Can fetch the task');
-        }
-        console.log(task);
-    })
-    db.collection('tasks').find({completed: true}).toArray((error, tasks)=> {
-        console.log(tasks);
-    })
+    // db.collection('tasks').findOne({_id: new mongodb.ObjectID("602f0706c653c618bd17d3ae")}, (error, task)=> {
+    //     if(error){
+    //         return console.log('Can fetch the task');
+    //     }
+    //     console.log(task);
+    // })
+    // db.collection('tasks').find({completed: true}).toArray((error, tasks)=> {
+    //     console.log(tasks);
+    // })
 
 })
