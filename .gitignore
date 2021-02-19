@@ -2,3 +2,4 @@
 package-lock.json
 
 /web-server/node_modules
+/task-manager/node_modules
