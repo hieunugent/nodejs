@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index",
+    "dev":"nodemon src/index",
     "bgstart": "brew services start mongodb-community",
     "bgstop": "brew services stop mongodb-community"
   },
@@ -12,9 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.16.4",
     "mongod": "^2.0.0",
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.17",
     "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
