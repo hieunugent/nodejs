@@ -31,7 +31,6 @@ app.get("/users/:id", (req, res)=> {
     User.findById(_id).then((user)=> {
         if(!user){
             return res.status(404).send()
-
         }
         res.send(user)
     }).catch((e)=> {
@@ -59,7 +58,6 @@ app.get("/tasks", (req, res)=>{
 app.get("/tasks/:id", (req,res)=> {
     const _id = req.params.id
     Task.findById(_id).then((task)=> {
-        console.log(task);
         if(!task){
             return res.status(404).send()
         }
