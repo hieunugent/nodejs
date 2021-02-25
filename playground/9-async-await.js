@@ -13,10 +13,9 @@ const add =(a, b)=> {
 }
 
 const doWork = async ()=>{
-    const sum = await add(1, 99)
-    const sum3 = await add(sum1, 111)
+    const sum = await add(1, 99) 
     const sum1 = await add(sum, 50)
-    
+    const sum3 = await add(sum1, 111)
     return sum3
 }
 doWork().then((result)=> {
