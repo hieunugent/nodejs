@@ -81,6 +81,10 @@ app.patch('/users/:id', async (req,res)=> {
         res.status(400).send()
     }
 })
+app.delete('/users/:id')
+
+
+
 
 app.post("/tasks", async (req, res)=> {
     const task = new Task(req.body)
