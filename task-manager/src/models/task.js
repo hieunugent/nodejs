@@ -11,12 +11,15 @@ const taskSchema =new mongoose.Schema({
     completed:{
         type: Boolean,
         default: false,
+    }, 
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 })
-taskSchema.pre('save', async function (next){
-    const task = this
-    console.log('this run before saving');
-})
+
+
+
 const Task = mongoose.model('Task', taskSchema)
 
 module.exports = Task
