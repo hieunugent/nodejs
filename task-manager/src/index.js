@@ -40,6 +40,7 @@ const main = async () => {
 
     const user = await User.findById('603e9e385c10dd46117a9dbf')
     await user.populate('tasks').execPopulate()
+    
     console.log(user.tasks)
 }
 main()
