@@ -41,7 +41,7 @@ router.get("/tasks", auth, async (req, res)=>{
    }
    if(req.query.sortBy){
        const parts = req.query.sortBy.split(':')
-       sort[parts[0]]= parts[1]=== 'desc' ? -1:1
+       sort[parts[0]]= parts[1] === 'desc' ? -1 : 1
    }
     try{
         // const tasks = await Task.find({owner:req.user._id})
@@ -51,9 +51,7 @@ router.get("/tasks", auth, async (req, res)=>{
             options:{
                 limit: parseInt(req.query.limit), 
                 skip:parseInt(req.query.skip),
-                sort:{
-                    createdAt:-1
-                }
+                sort,
             }
         }).execPopulate()
 
