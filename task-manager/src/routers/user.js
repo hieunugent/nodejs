@@ -1,4 +1,5 @@
 const express = require('express')
+const multer = require('multer')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const router = new express.Router()
@@ -55,7 +56,7 @@ router.post('/users/logoutAll', auth, async(req, res)=> {
     }
 })
 
-router.get("/users/me", auth ,async(req, res)=> {
+router.get("/users/me",  auth ,async(req, res)=> {
     res.send(req.user)
 // try{
 //    const users = await User.find({})
@@ -126,6 +127,21 @@ router.delete('/users/me',auth,  async(req, res)=> {
    }
 })
 
+const upload = multer({
+    dest:'avatars',
+    limits:{
+        fileSize:1000000
+    },
+    fileFilter(req, file, cb){
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            return cb(new Error('please upload file with end jpg jpeg, png'))
+        }
+        cb(undefined, true)
+    }
+})
+router.post('/users/me/avatar',upload.single('avatar'), (req, res)=> {
+    res.send()
+})
 
 
 
