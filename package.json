@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "chalk": "^4.1.0",
     "yargs": "^16.2.0"
   },
