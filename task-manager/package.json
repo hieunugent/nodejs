@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index",
-    "dev": "nodemon src/index",
+    "dev": "env-cmd ./config/dev.env nodemon src/index",
     "bgstart": "brew services start mongodb-community",
     "bgstop": "brew services stop mongodb-community"
   },
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
@@ -24,6 +25,7 @@
     "validator": "^10.9.0"
   },
   "devDependencies": {
+    "env-cmd": "^8.0.2",
     "nodemon": "^1.18.9"
   }
 }
