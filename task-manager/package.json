@@ -8,7 +8,7 @@
     "dev": "env-cmd ./config/dev.env nodemon src/index",
     "bgstart": "brew services start mongodb-community",
     "bgstop": "brew services stop mongodb-community",
-    "test": "env-cmd ./config/test.env jest --watch"
+    "test": "env-cmd ./config/test.env jest --watch --runInBand"
   },
   "jest": {
     "testEnvironment": "node"
