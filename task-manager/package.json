@@ -7,7 +7,8 @@
     "start": "node src/index",
     "dev": "env-cmd ./config/dev.env nodemon src/index",
     "bgstart": "brew services start mongodb-community",
-    "bgstop": "brew services stop mongodb-community"
+    "bgstop": "brew services stop mongodb-community",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "env-cmd": "^8.0.2",
+    "jest": "^26.6.3",
     "nodemon": "^1.18.9"
   }
 }
