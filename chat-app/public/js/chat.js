@@ -5,13 +5,20 @@ const $messageFromInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
 
 const $sendLocationButton = document.querySelector('#send-location')
+const $messages = document.querySelector('#messages')
+
+const messageTemplate = document.querySelector("#message-template").innerHTML
 
 
-socket.on('countUpdated', (count)=> {
-    console.log('the count has been updated', count);
-})
+
+
+
 socket.on('message', (message)=>{
     console.log(message);
+    const html = Mustache.render(messageTemplate,{
+        message
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
 })
 
 // document.querySelector('#increment').addEventListener('click', ()=> {
