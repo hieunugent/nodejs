@@ -18,9 +18,15 @@ let count = 0
 io.on('connection', (socket) =>{
     console.log('New Websocket connection')
     socket.emit('message','welcome!' )
-
+    socket.broadcast.emit('message', 'A new user has joined')
     socket.on('sendMessage', (message)=> {
         io.emit('message', message)
+    })
+    socket.on('sendLocation', (coords)=> {
+        io.emit('message', `Location:${coords.latitude} ${coords.longitude}`)
+    })
+    socket.on('disconnect', ()=> {
+        io.emit('message','A User has left')
     })
     // socket.emit('countUpdated', count )
     // socket.on('increment', ()=> {
