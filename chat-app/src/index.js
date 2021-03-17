@@ -25,11 +25,11 @@ io.on('connection', (socket) =>{
         if(filter.isProfane(message)){
             return callback('Profainity is not allowed')
         }
-        io.emit('message', message)
+        io.emit('message', generateMessage(message))
         callback()
     })
     socket.on('sendLocation', (coords,callback)=> {
-        io.emit('locationMessage', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+        io.emit('locationMessage', generateMessage(`https://google.com/maps?q=${coords.latitude},${coords.longitude}`))
         callback()
     })
     socket.on('disconnect', ()=> {
