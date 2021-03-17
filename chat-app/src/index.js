@@ -18,14 +18,22 @@ let count = 0
 
 io.on('connection', (socket) =>{
     console.log('New Websocket connection')
-    socket.emit('message',generateMessage('Welcome!!!') )
-    socket.broadcast.emit('message', generateMessage('A new user has joined'))
+    
+    socket.on('join', ({username, room})=> {
+        socket.join(room)
+        //socket.emit, io.emit, socket.broadcast.emit
+        socket.emit('message',generateMessage('Welcome!!!') )
+        socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined`))
+
+
+
+    })
     socket.on('sendMessage', (message,callback)=> {
         const filter = new Filter()
         if(filter.isProfane(message)){
             return callback('Profainity is not allowed')
         }
-        io.emit('message', generateMessage(message))
+        io.to('Center City').emit('message', generateMessage(message))
         callback()
     })
     socket.on('sendLocation', (coords,callback)=> {
