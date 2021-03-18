@@ -4,12 +4,15 @@ const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMessage } = require('./utils/messages')
+const { addUser, removeUser } = require('./utils/users')
+
+
+
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
 const port = process.env.PORT || 3000
-
 const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
@@ -19,14 +22,18 @@ let count = 0
 io.on('connection', (socket) =>{
     console.log('New Websocket connection')
     
-    socket.on('join', ({username, room})=> {
-        socket.join(room)
+    socket.on('join', (options, callback)=> {
+       const{error, user}= addUser({id: socket.id,...options})
+        if(error){
+            return callback(error)
+        }
+        socket.join(user.room)
         //socket.emit, io.emit, socket.broadcast.emit
         socket.emit('message',generateMessage('Welcome!!!') )
-        socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined`))
+        socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined`))
 
 
-
+        callback()
     })
     socket.on('sendMessage', (message,callback)=> {
         const filter = new Filter()
@@ -41,16 +48,11 @@ io.on('connection', (socket) =>{
         callback()
     })
     socket.on('disconnect', ()=> {
-        io.emit('message',generateMessage('A User has left'))
+        const user = removeUser(socket.id)
+        if(user){
+            io.to(user.room).emit('message',generateMessage(`${user.username} has left!!`))
+        }
     })
-    // socket.emit('countUpdated', count )
-    // socket.on('increment', ()=> {
-    //     count++
-    //     //  socket.emit('countUpdated', count)
-    //     io.emit('countUpdated', count)
-
-    // })
-
 })
 
 
